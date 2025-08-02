@@ -1,0 +1,33 @@
+<div [ngClass]="toastPosition" class="fixed space-y-2">
+  <ng-container *ngFor="let t of toastArray; let i = index">
+    <lib-toast-template-1 *ngIf="design == 'basic'" [showIcon]="showIcon" [toastIndex]="t.id"
+      [toastTitle]="t.toast.type | titlecase" [toastStyle]="getToastStyle(t.toast.type)"
+      [buttonHover]="getbuttonHover(t.toast.type)" [showProgressBar]="showProgressBar"
+      [acceptBtnLabel]="t.toast.acceptButtonLabel" [cancelBtnLabel]="t.toast.cancelButtonLabel"
+      [showButtons]="t.toast.withActions" [toastText]="getToastTextStyle(t.toast.type)" [toastMessage]="t.toast.message"
+      [icon]="getToastIcon(t.toast.type)" [iconColor]="getIconColor(t.toast.type)"
+      [iconStyle]="getToastIconStyle(t.toast.type)" [toastPosition]="''" [progress]="t.progress"
+      [progressBarStyle]="getProgressBarStyle(t.toast.type)" (toastAccept)="handleAccept($event)"
+      (fnCloseToast)="close($event)"></lib-toast-template-1>
+
+    <lib-toast-template-2 *ngIf="design == 'modern'" [showIcon]="showIcon" [toastIndex]="t.id"
+      [toastTitle]="t.toast.type | titlecase" [toastStyle]="getToastStyle(t.toast.type)"
+      [buttonHover]="getbuttonHover(t.toast.type)" [showProgressBar]="showProgressBar"
+      [acceptBtnLabel]="t.toast.acceptButtonLabel" [cancelBtnLabel]="t.toast.cancelButtonLabel"
+      [showButtons]="t.toast.withActions" [toastText]="getToastTextStyle(t.toast.type)" [toastMessage]="t.toast.message"
+      [icon]="getToastIcon(t.toast.type)" [iconColor]="getIconColor(t.toast.type)"
+      [iconStyle]="getToastIconStyle(t.toast.type)" [toastPosition]="''" [progress]="t.progress"
+      [progressBarStyle]="getProgressBarStyle(t.toast.type)" [bubbleColor]="getToastBubbleStyle(t.toast.type)"
+      (toastAccept)="handleAccept($event)" (fnCloseToast)="close($event)"></lib-toast-template-2>
+
+    <lib-toast-template-3 *ngIf="design == 'elegent'" [showIcon]="showIcon" [toastPosition]="''" [toastIndex]="t.id"
+      [showProgressBar]="showProgressBar" [acceptBtnLabel]="t.toast.acceptButtonLabel"
+      [cancelBtnLabel]="t.toast.cancelButtonLabel" [showButtons]="t.toast.withActions" [toastMessage]="t.toast.message"
+      [icon]="getToastIcon(t.toast.type)" [iconColor]="getIconColor(t.toast.type)"
+      [iconStyle]="getToastIconStyle(t.toast.type)" [buttonHover]="getbuttonHover(t.toast.type)"
+      [toastTitle]="t.toast.type | titlecase" [progress]="t.progress"
+      [progressBarStyle]="getProgressBarStyle(t.toast.type)" (fnCloseToast)="close($event)"
+      (toastAccept)="handleAccept($event)"></lib-toast-template-3>
+
+  </ng-container>
+</div>
