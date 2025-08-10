@@ -162,22 +162,6 @@ npm publish
 
 ---
 
-## 🧪 Running Unit Tests
-
-```bash
-ng test
-```
-
----
-
-## 🧩 Running End-to-End Tests
-
-```bash
-ng e2e
-```
-
----
-
 ## 📚 Additional Resources
 
 - Angular CLI Reference: [https://angular.dev/tools/cli](https://angular.dev/tools/cli)
