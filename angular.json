@@ -3,23 +3,23 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-toast": {
+    "ngx-pulse-toast": {
       "projectType": "library",
-      "root": "projects/ngx-toast",
-      "sourceRoot": "projects/ngx-toast/src",
+      "root": "projects/ngx-pulse-toast",
+      "sourceRoot": "projects/ngx-pulse-toast/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/ngx-toast/ng-package.json"
+            "project": "projects/ngx-pulse-toast/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngx-toast/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ngx-pulse-toast/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ngx-toast/tsconfig.lib.json"
+              "tsConfig": "projects/ngx-pulse-toast/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,11 +27,8 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/ngx-toast/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "tsConfig": "projects/ngx-pulse-toast/tsconfig.spec.json",
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }
@@ -49,9 +46,7 @@
             "outputPath": "dist/toast-demo",
             "index": "projects/toast-demo/src/index.html",
             "browser": "projects/toast-demo/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/toast-demo/tsconfig.app.json",
             "assets": [
               {
@@ -59,9 +54,7 @@
                 "input": "projects/toast-demo/public"
               }
             ],
-            "styles": [
-              "projects/toast-demo/src/styles.css"
-            ],
+            "styles": ["projects/toast-demo/src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -106,10 +99,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/toast-demo/tsconfig.spec.json",
             "assets": [
               {
@@ -117,9 +107,7 @@
                 "input": "projects/toast-demo/public"
               }
             ],
-            "styles": [
-              "projects/toast-demo/src/styles.css"
-            ],
+            "styles": ["projects/toast-demo/src/styles.css"],
             "scripts": []
           }
         }
@@ -148,9 +136,7 @@
             "outputPath": "dist/toast-demo-app",
             "index": "projects/toast-demo-app/src/index.html",
             "browser": "projects/toast-demo-app/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/toast-demo-app/tsconfig.app.json",
             "assets": [
               {
@@ -158,9 +144,7 @@
                 "input": "projects/toast-demo-app/public"
               }
             ],
-            "styles": [
-              "projects/toast-demo-app/src/styles.css"
-            ],
+            "styles": ["projects/toast-demo-app/src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -205,10 +189,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/toast-demo-app/tsconfig.spec.json",
             "assets": [
               {
@@ -216,9 +197,7 @@
                 "input": "projects/toast-demo-app/public"
               }
             ],
-            "styles": [
-              "projects/toast-demo-app/src/styles.css"
-            ],
+            "styles": ["projects/toast-demo-app/src/styles.css"],
             "scripts": []
           }
         }

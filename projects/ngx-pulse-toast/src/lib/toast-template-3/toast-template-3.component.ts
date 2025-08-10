@@ -5,20 +5,20 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
-} from "@angular/core";
+} from '@angular/core';
 
 @Component({
-  selector: "lib-toast-template-3",
+  selector: 'lib-toast-template-3',
   standalone: false,
-  templateUrl: "./toast-template-3.component.html",
-  styleUrl: "./toast-template-3.component.css",
+  templateUrl: './toast-template-3.component.html',
+  styleUrl: './toast-template-3.component.css',
 })
 export class ToastTemplate3Component implements OnChanges {
   @Input() showIcon: boolean = true;
   @Input() icon: any;
   @Input() closeToast: boolean = false;
-  @Input() toastTitle: string = "Success";
-  @Input() toastMessage: string = "";
+  @Input() toastTitle: string = 'Success';
+  @Input() toastMessage: string = '';
   @Input() toastStyle: any;
   @Input() toastText: any;
   @Input() toastPosition: any;
@@ -32,13 +32,14 @@ export class ToastTemplate3Component implements OnChanges {
   @Input() iconColor: any;
   @Input() acceptBtnLabel: any;
   @Input() cancelBtnLabel: any;
+  @Input() toastGradient: string = 'bg-gradient-to-r from-red-50 to-white';
   @Output() toastAccept = new EventEmitter();
 
   @Output() fnCloseToast = new EventEmitter<{ index: any }>();
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["progress"]) {
-      const currentProgress = changes["progress"].currentValue;
+    if (changes['progress']) {
+      const currentProgress = changes['progress'].currentValue;
       if (currentProgress >= 100) {
         this.closeToast = true;
       }

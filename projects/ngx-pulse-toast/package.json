@@ -1,6 +1,19 @@
 {
   "name": "ngx-pulse-toast",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "description": "Angular toast notification library",
+  "author": "Kashif Imran",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kashif0313/Angular-Pulse-Toast.git"
+  },
+  "keywords": [
+    "angular",
+    "toast",
+    "notification",
+    "library"
+  ],
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0"

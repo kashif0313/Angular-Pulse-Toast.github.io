@@ -27,7 +27,7 @@
       [iconStyle]="getToastIconStyle(t.toast.type)" [buttonHover]="getbuttonHover(t.toast.type)"
       [toastTitle]="t.toast.type | titlecase" [progress]="t.progress"
       [progressBarStyle]="getProgressBarStyle(t.toast.type)" (fnCloseToast)="close($event)"
-      (toastAccept)="handleAccept($event)"></lib-toast-template-3>
+      (toastAccept)="handleAccept($event)" [toastGradient]="getToastGradient(t.toast.type)"></lib-toast-template-3>
 
   </ng-container>
 </div>

@@ -89,7 +89,7 @@ this.toast
 
 Minimalistic design with icon, title, message, optional buttons, and progress bar.
 
-![Style 1 Preview](docs/style1.png)
+![Style 1 Preview](docs/style1.jpg)
 
 ---
 
@@ -97,7 +97,7 @@ Minimalistic design with icon, title, message, optional buttons, and progress ba
 
 Visually enhanced toast with background elements, shadows, larger layout, optional buttons, and progress bar.
 
-![Style 2 Preview](docs/style2.png)
+![Style 2 Preview](docs/style2.jpg)
 
 ---
 
@@ -105,7 +105,7 @@ Visually enhanced toast with background elements, shadows, larger layout, option
 
 Compact and modern layout with buttons and progress bar.
 
-![Style 3 Preview](docs/style3.png)
+![Style 3 Preview](docs/style3.jpg)
 
 ---
 

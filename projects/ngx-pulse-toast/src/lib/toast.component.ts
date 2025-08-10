@@ -84,7 +84,7 @@ export class ToastComponent {
     closing: boolean;
   }) {
     this.toastObject = toastObj;
-    const duration = toastObj.toast.duration ?? 3000;
+    const duration = toastObj.toast.duration ?? 13000;
     const intervalTime = 100;
     const increment = (intervalTime / duration) * 100;
 
@@ -248,6 +248,20 @@ export class ToastComponent {
         return 'bg-red-500 ';
       default:
         return 'bg-gray-500';
+    }
+  }
+  getToastGradient(type: string): string {
+    switch (type) {
+      case 'error':
+        return 'bg-gradient-to-r from-red-50 to-white border-red-200';
+      case 'success':
+        return 'bg-gradient-to-r from-green-50 to-white border-green-200';
+      case 'warning':
+        return 'bg-gradient-to-r from-yellow-50 to-white border-yellow-200';
+      case 'info':
+        return 'bg-gradient-to-r from-blue-50 to-white border-blue-200';
+      default:
+        return 'bg-gradient-to-r from-gray-50 to-white border-gray-200';
     }
   }
 
