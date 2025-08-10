@@ -26,7 +26,7 @@ export class ToastService {
     const action$ = new Subject<'accept' | 'cancel'>();
 
     const defaultValues: Partial<Toast> = {
-      duration: 13000,
+      duration: 3000,
       withActions: false,
       acceptButtonLabel: 'Show Me',
       cancelButtonLabel: 'Cancel',
