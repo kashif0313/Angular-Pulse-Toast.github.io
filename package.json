@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:demo": "ng serve toast-demo",
     "build": "ng build",
+    "build:demo": "ng build toast-demo",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:lib": "ng build ngx-pulse-toast && cp README.md dist/ngx-pulse-toast/"
