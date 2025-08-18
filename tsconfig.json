@@ -10,7 +10,10 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "ngx-pulse-toast": ["./dist/ngx-pulse-toast"]
+      "ngx-pulse-toast": [
+        "./projects/ngx-pulse-toast/src/public-api.ts",
+        "./dist/ngx-pulse-toast"
+      ]
     },
     "skipLibCheck": true,
     "isolatedModules": true,

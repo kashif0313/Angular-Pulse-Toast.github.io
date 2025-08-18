@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { ToastService, Toast } from './toast.service';
 import { Subject, Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -20,7 +20,7 @@ export class ToastComponent {
   message = '';
   heading = '';
 
-  @Input() position: string = ' top-center';
+  @Input() position: string = 'top-center';
   toastPosition: any;
   @Input() stack = true; // new stack option
 
@@ -75,6 +75,12 @@ export class ToastComponent {
 
       this.startProgress(this.toastArray[this.toastArray.length - 1]);
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['position']) {
+      this.setPosition();
+    }
   }
 
   private startProgress(toastObj: {
@@ -168,20 +174,6 @@ export class ToastComponent {
     }
   }
 
-  // getToastIcon(type: string): string {
-  //   switch (type) {
-  //     case 'success':
-  //       return 'check_circle';
-  //     case 'info':
-  //       return 'lightbulb';
-  //     case 'warning':
-  //       return 'warning';
-  //     case 'error':
-  //       return 'error';
-  //     default:
-  //       return 'info';
-  //   }
-  // }
   getToastIcon(type: string): SafeHtml {
     let svg = '';
     switch (type) {

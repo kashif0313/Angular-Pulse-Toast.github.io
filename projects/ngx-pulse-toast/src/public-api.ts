@@ -5,3 +5,4 @@ export * from './lib/ngx-pulse-toast.component';
 export * from './lib/ngx-pulse-toast.module';
 export * from './lib/ngx-pulse-toast.service';
 export * from './lib/toast.component';
+export * from './lib/toast.service';
