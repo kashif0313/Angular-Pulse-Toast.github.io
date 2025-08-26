@@ -1,0 +1,197 @@
+<ngx-pulse-toast [design]="design" [position]="position" [showIcon]="showIcon" [showProgressBar]="showProgressBar"
+  [stack]="stack"></ngx-pulse-toast>
+<div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 p-8 font-sans">
+  <!-- Header -->
+  <header class="flex justify-between items-center mb-12">
+    <h1
+      class="text-4xl font-extrabold bg-gradient-to-r from-green-400 to-blue-400 text-transparent bg-clip-text drop-shadow">
+      Toast Design Lab
+    </h1>
+    <div class="flex gap-3">
+      <button
+        class="px-4 py-2 rounded-lg bg-gray-800/70 backdrop-blur-sm hover:bg-gray-700 text-sm shadow-md transition">
+        📋 Copy Code
+      </button>
+      <button (click)="showToast()"
+        class="px-4 py-2 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg text-sm font-medium transition">
+        ▶ Test Toast
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Live Preview -->
+    <div
+      class="bg-gray-800/40 backdrop-blur-md border border-gray-700 p-6 rounded-2xl shadow-lg transition hover:shadow-2xl">
+      <h2 class="text-xl font-semibold mb-2">👁 Live Preview</h2>
+      <p class="text-sm text-gray-400 mb-6">
+        See exactly how your toast will appear
+      </p>
+      <div class="flex justify-center items-center min-h-[220px]">
+        <div *ngIf="design == 'basic'">
+          <div class="relative my-1 mx-auto z-50 w-[400px] rounded-lg shadow-lg" [ngClass]="getToastStyle(type)">
+            <div class="flex items-start space-x-4 p-4">
+              <div class="flex-shrink-0" *ngIf="showIcon">
+                <div [ngClass]="getIconColor(type)" class="rounded-full p-2 text-2xl" [innerHTML]="getToastIcon(type)">
+                </div>
+              </div>
+
+              <div class="flex-grow">
+                <h3 class="font-semibold" [ngClass]="getToastTextStyle(type)">
+                  {{ toastTitle }}
+                </h3>
+                <p class="text-sm" [ngClass]="getToastTextStyle(type)">
+                  {{ message }}
+                </p>
+              </div>
+
+              <button class="text-gray-500 hover:text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                  fill="#6B7280">
+                  <path
+                    d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex justify-end gap-2 px-5 pb-5" *ngIf="withActions">
+              <button class="text-[#777] text-sm font-medium rounded-lg px-4 py-2 hover:bg-gray-100 transition">
+                {{ cancelBtnLabel }}
+              </button>
+              <button [ngClass]="[getToastIconStyle(type), getbuttonHover(type)]"
+                class="text-sm font-medium rounded-lg px-4 py-2 transition">
+                {{ acceptBtnLabel }}
+              </button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="h-1 bg-[#e0e0e0] rounded-b-lg overflow-hidden" *ngIf="showProgressBar">
+              <div [ngClass]="getProgressBarStyle(type)" class="h-full transition-all duration-100 ease-in-out"
+                [style.width.%]="progress"></div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Configuration -->
+    <div
+      class="bg-gray-800/40 backdrop-blur-md border border-gray-700 p-6 rounded-2xl shadow-lg transition hover:shadow-2xl">
+      <h2 class="text-xl font-semibold mb-4">⚙ Configuration</h2>
+
+      <!-- Tabs -->
+      <div class="flex gap-3 border-b border-gray-700 mb-6">
+        <button class="px-4 py-2 text-sm rounded-t-lg transition" [class.bg-gray-700]="tab === 'content'"
+          (click)="tab = 'content'">
+          Content
+        </button>
+        <button class="px-4 py-2 text-sm rounded-t-lg transition" [class.bg-gray-700]="tab === 'style'"
+          (click)="tab = 'style'">
+          Style
+        </button>
+        <button class="px-4 py-2 text-sm rounded-t-lg transition" [class.bg-gray-700]="tab === 'behavior'"
+          (click)="tab = 'behavior'">
+          Behavior
+        </button>
+      </div>
+
+      <!-- Content Config -->
+      <div *ngIf="tab === 'content'" class="space-y-5 animate-fadeIn">
+        <div>
+          <label class="block text-sm mb-1 text-gray-300">Title</label>
+          <input [(ngModel)]="message"
+            class="w-full px-3 py-2 rounded-lg bg-gray-900/70 border border-gray-600 focus:ring-2 focus:ring-green-400 transition" />
+        </div>
+
+        <div>
+          <label class="block text-sm mb-1 text-gray-300">Type</label>
+          <select [(ngModel)]="type"
+            class="w-full px-3 py-2 rounded-lg bg-gray-900/70 border border-gray-600 focus:ring-2 focus:ring-green-400 transition">
+            <option value="success">✅ Success</option>
+            <option value="info">ℹ️ Info</option>
+            <option value="warning">⚠️ Warning</option>
+            <option value="error">❌ Error</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm mb-1 text-gray-300">Duration (ms)</label>
+          <input type="number" [(ngModel)]="duration"
+            class="w-full px-3 py-2 rounded-lg bg-gray-900/70 border border-gray-600 focus:ring-2 focus:ring-green-400 transition" />
+        </div>
+
+        <!-- Switches -->
+        <div class="grid grid-cols-2 gap-4 text-sm">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" [(ngModel)]="withActions" class="accent-green-400" />
+            With Actions
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" [(ngModel)]="showIcon" class="accent-blue-400" />
+            Show Icon
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" [(ngModel)]="showProgressBar" class="accent-purple-400" />
+            Progress Bar
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" [(ngModel)]="stack" class="accent-yellow-400" />
+            Stack Toasts
+          </label>
+        </div>
+      </div>
+
+      <!-- Style Config -->
+      <div *ngIf="tab === 'style'" class="space-y-5 animate-fadeIn">
+        <div>
+          <label class="block text-sm mb-1 text-gray-300">Toast Design</label>
+          <select [(ngModel)]="design"
+            class="w-full px-3 py-2 rounded-lg bg-gray-900/70 border border-gray-600 focus:ring-2 focus:ring-blue-400 transition">
+            <option value="basic">🟢 Basic</option>
+            <option value="modern">🔵 Modern</option>
+            <option value="elegent">✨ Elegant</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm mb-1 text-gray-300">Position</label>
+          <select [(ngModel)]="position"
+            class="w-full px-3 py-2 rounded-lg bg-gray-900/70 border border-gray-600 focus:ring-2 focus:ring-pink-400 transition">
+            <option value="top-left">Top Left</option>
+            <option value="top-center">Top Center</option>
+            <option value="top-right">Top Right</option>
+            <option value="bottom-left">Bottom Left</option>
+            <option value="bottom-center">Bottom Center</option>
+            <option value="bottom-right">Bottom Right</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Presets -->
+  <section
+    class="bg-gray-800/40 backdrop-blur-md border border-gray-700 p-6 rounded-2xl shadow-lg mt-10 transition hover:shadow-2xl">
+    <h2 class="text-xl font-semibold mb-6">⚡ Quick Presets</h2>
+    <div class="flex flex-wrap gap-3">
+      <button (click)="quick('success')"
+        class="px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 shadow-md transition">
+        ✅ Success
+      </button>
+      <button (click)="quick('error')" class="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 shadow-md transition">
+        ❌ Error
+      </button>
+      <button (click)="quick('warning')"
+        class="px-4 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 shadow-md transition">
+        ⚠️ Warning
+      </button>
+      <button (click)="quick('info')" class="px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 shadow-md transition">
+        ℹ️ Info
+      </button>
+    </div>
+  </section>
+</div>

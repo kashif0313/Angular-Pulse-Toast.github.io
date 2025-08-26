@@ -1,181 +1,177 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgxPulseToastModule, ToastService } from 'ngx-pulse-toast';
+// import { NgxPulseToastModule, ToastService } from 'ngx-pulse-toast';
+import { NgxPulseToastModule } from '../../../ngx-pulse-toast/src/public-api';
+import { ToastService } from '../../../ngx-pulse-toast/src/lib/toast.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, FormsModule, NgxPulseToastModule],
-  template: `
-    <div class="container">
-      <header class="page-header card">
-        <div class="title-row">
-          <h1>ngx-pulse-toast demo</h1>
-          <p class="subheading">
-            Show different toast types, designs, positions, and actions.
-          </p>
-        </div>
-      </header>
-
-      <section class="card">
-        <h3 class="card-title">Controls</h3>
-        <form class="form-grid" (submit)="showToast(); $event.preventDefault()">
-          <div class="field">
-            <label for="msg">Message</label>
-            <input
-              id="msg"
-              type="text"
-              [(ngModel)]="message"
-              name="message"
-              placeholder="Enter message"
-            />
-          </div>
-
-          <div class="field">
-            <label for="type">Type</label>
-            <select id="type" [(ngModel)]="type" name="type">
-              <option value="success">success</option>
-              <option value="info">info</option>
-              <option value="warning">warning</option>
-              <option value="error">error</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="design">Design</label>
-            <select id="design" [(ngModel)]="design" name="design">
-              <option value="basic">basic</option>
-              <option value="modern">modern</option>
-              <option value="elegent">elegent</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="position">Position</label>
-            <select id="position" [(ngModel)]="position" name="position">
-              <option>top-left</option>
-              <option>top-center</option>
-              <option>top-right</option>
-              <option>bottom-left</option>
-              <option>bottom-center</option>
-              <option>bottom-right</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="duration">Duration (ms)</label>
-            <input
-              id="duration"
-              type="number"
-              [(ngModel)]="duration"
-              name="duration"
-              min="500"
-              step="500"
-            />
-          </div>
-
-          <div class="switches">
-            <label class="switch"
-              ><input
-                type="checkbox"
-                [(ngModel)]="withActions"
-                name="withActions"
-              />
-              With actions</label
-            >
-            <label class="switch"
-              ><input type="checkbox" [(ngModel)]="showIcon" name="showIcon" />
-              Show icon</label
-            >
-            <label class="switch"
-              ><input
-                type="checkbox"
-                [(ngModel)]="showProgressBar"
-                name="showProgressBar"
-              />
-              Progress bar</label
-            >
-            <label class="switch"
-              ><input type="checkbox" [(ngModel)]="stack" name="stack" /> Stack
-              multiple</label
-            >
-          </div>
-
-          <div class="actions">
-            <button type="submit" class="btn btn-primary">Show toast</button>
-          </div>
-        </form>
-      </section>
-
-      <section class="grid">
-        <div class="card">
-          <h3 class="card-title">Quick actions</h3>
-          <div class="controls">
-            <button class="btn" (click)="quick('success')">Success</button>
-            <button class="btn" (click)="quick('info')">Info</button>
-            <button class="btn" (click)="quick('warning')">Warning</button>
-            <button class="btn" (click)="quick('error')">Error</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Actionable toast</h3>
-          <div class="controls">
-            <button class="btn btn-outline" (click)="actionToast()">
-              Show action toast
-            </button>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <ngx-pulse-toast
-      [design]="design"
-      [position]="position"
-      [showIcon]="showIcon"
-      [showProgressBar]="showProgressBar"
-      [stack]="stack"
-    ></ngx-pulse-toast>
-  `,
-  styles: [],
+  templateUrl: './demo.component.html',
+  styles: [
+    `
+      .animate-fadeIn {
+        animation: fadeIn 0.4s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    `,
+  ],
 })
 export class DemoComponent {
-  message = 'Hello from ngx-pulse-toast!';
-  type: 'success' | 'info' | 'warning' | 'error' = 'success';
-  design: 'basic' | 'modern' | 'elegent' = 'basic';
+  constructor(private toast: ToastService, private sanitizer: DomSanitizer) {}
+
+  message = 'New Update Available!';
+  toastTitle = 'Notification';
+  type: 'success' | 'info' | 'warning' | 'error' = 'info';
+  design: 'basic' | 'modern' | 'elegent' = 'modern';
   position = 'top-center';
   duration = 3000;
   withActions = false;
   showIcon = true;
   showProgressBar = true;
   stack = true;
+  tab: 'content' | 'style' | 'behavior' = 'content';
 
-  constructor(private toast: ToastService) {}
+  // UI helpers (needed for template bindings)
+  acceptBtnLabel = 'Yes';
+  cancelBtnLabel = 'No';
+  progress = 70; // demo progress %
+  showButtons = true;
 
   showToast() {
     this.toast
       .show(this.message, this.type, {
         duration: this.duration,
         withActions: this.withActions,
-        acceptButtonLabel: 'Yes',
-        cancelButtonLabel: 'No',
+        acceptButtonLabel: this.acceptBtnLabel,
+        cancelButtonLabel: this.cancelBtnLabel,
       })
-      .subscribe((res: 'accept' | 'cancel') => console.log('action:', res));
+      .subscribe((res) => console.log('action:', res));
   }
 
   quick(t: 'success' | 'info' | 'warning' | 'error') {
     this.toast.show(`${t} toast`, t, { duration: 2500 });
   }
+  getToastStyle(type: string): string {
+    switch (type) {
+      case 'success':
+        return 'bg-green-50 border border-green-300';
+      case 'info':
+        return 'bg-blue-50 border border-blue-300';
+      case 'warning':
+        return 'bg-yellow-50 border border-yellow-300';
+      case 'error':
+        return 'bg-red-50 border border-red-300';
+      default:
+        return 'bg-gray-50 border border-gray-300';
+    }
+  }
 
-  actionToast() {
-    this.toast
-      .show('Do you want to proceed?', 'info', {
-        withActions: true,
-        duration: 6000,
-        acceptButtonLabel: 'Proceed',
-        cancelButtonLabel: 'Dismiss',
-      })
-      .subscribe((res: 'accept' | 'cancel') => console.log('User chose:', res));
+  getToastIcon(type: string): SafeHtml {
+    let svg = '';
+    switch (type) {
+      case 'success':
+        svg =
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffffff"><path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>';
+        break;
+      case 'info':
+        svg =
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffffff"><path d="M400-240q-33 0-56.5-23.5T320-320v-50q-57-39-88.5-100T200-600q0-117 81.5-198.5T480-880q117 0 198.5 81.5T760-600q0 69-31.5 129.5T640-370v50q0 33-23.5 56.5T560-240H400Zm0-80h160v-92l34-24q41-28 63.5-71.5T680-600q0-83-58.5-141.5T480-800q-83 0-141.5 58.5T280-600q0 49 22.5 92.5T366-436l34 24v92Zm0 240q-17 0-28.5-11.5T360-120v-40h240v40q0 17-11.5 28.5T560-80H400Zm80-520Z"/></svg>';
+        break;
+      case 'warning':
+        svg =
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffffff"><path d="m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm302-40q17 0 28.5-11.5T520-280q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280q0 17 11.5 28.5T480-240Zm-40-120h80v-200h-80v200Zm40-100Z"/></svg>';
+        break;
+      case 'error':
+        svg =
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffffff"><path d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>';
+        break;
+      default:
+        svg =
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffffff"><path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>';
+    }
+    return this.sanitizer.bypassSecurityTrustHtml(svg);
+  }
+  getIconColor(type: string): string {
+    switch (type) {
+      case 'success':
+        return 'bg-green-500';
+      case 'info':
+        return 'bg-blue-500 ';
+      case 'warning':
+        return 'bg-yellow-500';
+      case 'error':
+        return 'bg-red-500 ';
+      default:
+        return 'bg-gray-500';
+    }
+  }
+  getToastTextStyle(type: string): string {
+    switch (type) {
+      case 'success':
+        return 'text-green-700';
+      case 'info':
+        return 'text-blue-700';
+      case 'warning':
+        return 'text-yellow-700';
+      case 'error':
+        return 'text-red-700';
+      default:
+        return 'text-gray-700';
+    }
+  }
+  getToastIconStyle(type: string): string {
+    switch (type) {
+      case 'success':
+        return 'text-green-500 bg-green-100';
+      case 'info':
+        return 'text-blue-500 bg-blue-100';
+      case 'warning':
+        return 'text-yellow-500 bg-yellow-100';
+      case 'error':
+        return 'text-red-500 bg-red-100';
+      default:
+        return 'text-gray-500 bg-gray-100';
+    }
+  }
+  getbuttonHover(type: string): string {
+    switch (type) {
+      case 'success':
+        return 'hover:bg-green-200';
+      case 'info':
+        return 'hover:bg-blue-200';
+      case 'warning':
+        return 'hover:bg-yellow-200';
+      case 'error':
+        return 'hover:bg-red-200';
+      default:
+        return 'hover:bg-green-200';
+    }
+  }
+  getProgressBarStyle(type: string): string {
+    switch (type) {
+      case 'success':
+        return 'bg-green-500';
+      case 'info':
+        return 'bg-blue-500';
+      case 'warning':
+        return 'bg-yellow-500';
+      case 'error':
+        return 'bg-red-500';
+      default:
+        return 'bg-gray-500';
+    }
   }
 }
