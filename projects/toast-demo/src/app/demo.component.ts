@@ -11,23 +11,6 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   standalone: true,
   imports: [CommonModule, FormsModule, NgxPulseToastModule],
   templateUrl: './demo.component.html',
-  styles: [
-    `
-      .animate-fadeIn {
-        animation: fadeIn 0.4s ease-in-out;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(5px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    `,
-  ],
 })
 export class DemoComponent {
   constructor(private toast: ToastService, private sanitizer: DomSanitizer) {}
@@ -38,7 +21,7 @@ export class DemoComponent {
   design: 'basic' | 'modern' | 'elegent' = 'modern';
   position = 'top-center';
   duration = 3000;
-  withActions = false;
+  withActions: boolean = false;
   showIcon = true;
   showProgressBar = true;
   stack = true;
@@ -49,6 +32,30 @@ export class DemoComponent {
   cancelBtnLabel = 'No';
   progress = 70; // demo progress %
   showButtons = true;
+  checked: boolean = false;
+  actionToggle() {
+    this.withActions = !this.withActions;
+  }
+  resetConfig() {
+    this.message = '';
+    this.type = 'success';
+    this.duration = 3000;
+    this.acceptBtnLabel = 'Accept';
+    this.cancelBtnLabel = 'Cancel';
+    this.withActions = false;
+    this.showIcon = true;
+    this.showProgressBar = true;
+    this.design = 'basic';
+    this.position = 'top-right';
+    this.tab = 'content';
+  }
+
+  iconToggle() {
+    this.showIcon = !this.showIcon;
+  }
+  progressbarToggle() {
+    this.showProgressBar = !this.showProgressBar;
+  }
 
   showToast() {
     this.toast
@@ -63,6 +70,20 @@ export class DemoComponent {
 
   quick(t: 'success' | 'info' | 'warning' | 'error') {
     this.toast.show(`${t} toast`, t, { duration: 2500 });
+  }
+  getToastGradient(type: string): string {
+    switch (type) {
+      case 'error':
+        return 'bg-gradient-to-r from-red-50 to-white border-red-200';
+      case 'success':
+        return 'bg-gradient-to-r from-green-50 to-white border-green-200';
+      case 'warning':
+        return 'bg-gradient-to-r from-yellow-50 to-white border-yellow-200';
+      case 'info':
+        return 'bg-gradient-to-r from-blue-50 to-white border-blue-200';
+      default:
+        return 'bg-gradient-to-r from-gray-50 to-white border-gray-200';
+    }
   }
   getToastStyle(type: string): string {
     switch (type) {
@@ -172,6 +193,20 @@ export class DemoComponent {
         return 'bg-red-500';
       default:
         return 'bg-gray-500';
+    }
+  }
+  getToastBubbleStyle(type: string): string {
+    switch (type) {
+      case 'success':
+        return 'bg-green-300';
+      case 'info':
+        return 'bg-blue-300';
+      case 'warning':
+        return 'bg-yellow-300';
+      case 'error':
+        return 'bg-red-300';
+      default:
+        return 'bg-gray-300';
     }
   }
 }
