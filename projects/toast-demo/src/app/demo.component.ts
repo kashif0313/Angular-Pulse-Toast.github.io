@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, SimpleChanges, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // import { NgxPulseToastModule, ToastService } from 'ngx-pulse-toast';
@@ -20,12 +20,20 @@ export class DemoComponent {
   type: 'success' | 'info' | 'warning' | 'error' = 'info';
   design: 'basic' | 'modern' | 'elegent' = 'modern';
   position = 'top-center';
-  duration = 3000;
+  private _duration = 3000;
+  get duration() {
+    return this._duration;
+  }
+  set duration(value: number) {
+    this._duration = value;
+    this.restartProgress(); // 👈 restart animation when duration changes
+  }
   withActions: boolean = false;
   showIcon = true;
   showProgressBar = true;
   stack = true;
-  tab: 'content' | 'style' | 'behavior' = 'content';
+  @ViewChild('progressBar', { static: false })
+  progressBar!: ElementRef<HTMLDivElement>;
 
   // UI helpers (needed for template bindings)
   acceptBtnLabel = 'Yes';
@@ -33,6 +41,10 @@ export class DemoComponent {
   progress = 70; // demo progress %
   showButtons = true;
   checked: boolean = false;
+  capitalize(text: string): string {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
   actionToggle() {
     this.withActions = !this.withActions;
   }
@@ -47,7 +59,6 @@ export class DemoComponent {
     this.showProgressBar = true;
     this.design = 'basic';
     this.position = 'top-right';
-    this.tab = 'content';
   }
 
   iconToggle() {
@@ -69,8 +80,31 @@ export class DemoComponent {
   }
 
   quick(t: 'success' | 'info' | 'warning' | 'error') {
-    this.toast.show(`${t} toast`, t, { duration: 2500 });
+    this.toast.show(`${t} toast`, t, { duration: this.duration });
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['duration'] && !changes['duration'].firstChange) {
+      this.restartProgress();
+    }
+  }
+  private restartProgress() {
+    if (this.progressBar) {
+      const bar = this.progressBar.nativeElement;
+
+      // Reset animation
+      bar.style.transition = 'none';
+      bar.style.width = '0%';
+
+      // Force reflow
+      void bar.offsetWidth;
+
+      // Restart animation
+      bar.style.transition = `width ${this.duration}ms linear`;
+      bar.style.width = '100%';
+    }
+  }
+
   getToastGradient(type: string): string {
     switch (type) {
       case 'error':
