@@ -1,7 +1,6 @@
 import { Component, ElementRef, SimpleChanges, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// import { NgxPulseToastModule, ToastService } from 'ngx-pulse-toast';
 import { NgxPulseToastModule } from '../../../ngx-pulse-toast/src/public-api';
 import { ToastService } from '../../../ngx-pulse-toast/src/lib/toast.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
