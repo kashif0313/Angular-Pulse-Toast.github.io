@@ -17,7 +17,7 @@ export class DemoComponent {
   message = 'New Update Available!';
   toastTitle = 'Notification';
   type: 'success' | 'info' | 'warning' | 'error' = 'info';
-  design: 'basic' | 'modern' | 'elegent' = 'modern';
+  design: 'basic' | 'modern' | 'elegent' = 'basic';
   position = 'top-center';
   private _duration = 3000;
   get duration() {
@@ -79,7 +79,12 @@ export class DemoComponent {
   }
 
   quick(t: 'success' | 'info' | 'warning' | 'error') {
-    this.toast.show(`${t} toast`, t, { duration: this.duration });
+    this.toast.show(`${t} toast`, t, {
+      duration: this.duration,
+      withActions: this.withActions,
+      acceptButtonLabel: this.acceptBtnLabel,
+      cancelButtonLabel: this.cancelBtnLabel,
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -87,7 +92,7 @@ export class DemoComponent {
       this.restartProgress();
     }
   }
-  private restartProgress() {
+  restartProgress() {
     if (this.progressBar) {
       const bar = this.progressBar.nativeElement;
 
