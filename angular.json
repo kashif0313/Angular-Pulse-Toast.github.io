@@ -59,6 +59,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/Angular-Pulse-Toast/",
               "budgets": [
                 {
                   "type": "initial",
@@ -108,96 +109,6 @@
               }
             ],
             "styles": ["projects/toast-demo/src/styles.css"],
-            "scripts": []
-          }
-        }
-      }
-    },
-    "toast-demo-app": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "standalone": false
-        },
-        "@schematics/angular:directive": {
-          "standalone": false
-        },
-        "@schematics/angular:pipe": {
-          "standalone": false
-        }
-      },
-      "root": "projects/toast-demo-app",
-      "sourceRoot": "projects/toast-demo-app/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:application",
-          "options": {
-            "outputPath": "dist/toast-demo-app",
-            "index": "projects/toast-demo-app/src/index.html",
-            "browser": "projects/toast-demo-app/src/main.ts",
-            "polyfills": ["zone.js"],
-            "tsConfig": "projects/toast-demo-app/tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/toast-demo-app/public"
-              }
-            ],
-            "styles": ["projects/toast-demo-app/src/styles.css"],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
-                }
-              ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "toast-demo-app:build:production"
-            },
-            "development": {
-              "buildTarget": "toast-demo-app:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "projects/toast-demo-app/tsconfig.spec.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/toast-demo-app/public"
-              }
-            ],
-            "styles": ["projects/toast-demo-app/src/styles.css"],
             "scripts": []
           }
         }
